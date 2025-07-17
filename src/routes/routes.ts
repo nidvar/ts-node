@@ -1,12 +1,13 @@
 import express from 'express';
-import {getAllPosts, register, createNewPost, login, logout} from '../controllers/controllers';
+import {getAllPosts, register, createNewPost, login, logout, authMiddleware, singlePost} from '../controllers/controllers';
 
 const router = express.Router();
 
 router.get('/', getAllPosts);
 router.post('/register', register);
-router.post('/create', createNewPost);
+router.post('/create', authMiddleware, createNewPost);
 router.post('/login', login);
-router.post('/logout', logout);
+router.post('/logout', authMiddleware, logout);
+router.get('/post/:id', singlePost);
 
-export default router
+export const mainRouter = router;

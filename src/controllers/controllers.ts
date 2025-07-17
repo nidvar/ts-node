@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import { Request, Response, NextFunction } from 'express';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -58,12 +58,37 @@ export const login = async (req: Request, res: Response)=>{
 export const logout = async (req: Request, res: Response)=>{
     console.log(req.body);
 
+    res.clearCookie('token',{
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict'
+    });
+
     res.json({message: 'logout function end'});
 };
 
 export const getAllPosts = async (req: Request, res: Response) => {
-    res.json({message: 'all posts'})
+    try{
+        const data = await Post.find({});
+        res.json(data);
+    }catch(error){
+        console.log(error);
+        res.json({message: 'error', error: error})
+    };
 };
+
+export const singlePost = async (req: Request, res: Response)=>{
+
+    try{
+        const singlePost = await Post.findById({_id: req.params.id});
+        console.log(singlePost);
+        res.json(singlePost);
+    }catch(error){
+
+    }
+
+    res.json({message: 'finished'})
+}
 
 export const createNewPost = async (req: Request, res: Response)=>{
     const data = req.body;
@@ -80,4 +105,10 @@ export const createNewPost = async (req: Request, res: Response)=>{
         console.log(error);
         res.status(500).json({ message: 'Internal server error' });
     }
+};
+
+export const authMiddleware = async (req: Request, res: Response, next: NextFunction)=>{
+    console.log('middleware');
+
+    next();
 }
