@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
 
 import { User } from '../models/UsersModel';
 import { Post } from '../models/PostsModel';
@@ -28,8 +29,19 @@ export const login = async (req: Request, res: Response)=>{
         const user = await User.findOne({email: email});
         if(user){
             const dbPassword = user.password;
-            const passwordCheck = bcrypt.compareSync(enteredPassword, dbPassword);
+            const passwordCheck = await bcrypt.compare(enteredPassword, dbPassword);
             if(passwordCheck){
+                const token = jwt.sign({
+                    id: user._id,
+                    email: req.body.email,
+                }, process.env.JWT_SECRET, {expiresIn: '30m'});
+
+                res.cookie('token', token, {
+                    httpOnly: true,
+                    secure: true,
+                    sameSite: 'strict',
+                    maxAge: 900000
+                });
                 res.json({message: 'pass'});
             }else{
                 res.json({message: 'wrong password'});
@@ -41,6 +53,12 @@ export const login = async (req: Request, res: Response)=>{
         console.log(error);
         res.json({message: 'error'})
     }
+};
+
+export const logout = async (req: Request, res: Response)=>{
+    console.log(req.body);
+
+    res.json({message: 'logout function end'});
 };
 
 export const getAllPosts = async (req: Request, res: Response) => {
