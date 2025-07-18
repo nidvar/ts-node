@@ -16,7 +16,7 @@ export const createApp = async ()=>{
     app.use(express.json());
 
     const allowedOrigins = [
-        'https://cybermern.vercel.app/',
+        'https://cybermern.vercel.app',
         'http://localhost:5173',
     ];
 
