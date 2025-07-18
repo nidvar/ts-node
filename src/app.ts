@@ -22,7 +22,7 @@ export const createApp = async ()=>{
 
     app.use(cors({
     origin: (origin, callback) => {
-        // Allow requests with no origin (e.g. curl, mobile apps)
+        console.log('Request origin:', origin);
         if (!origin) return callback(null, true);
         if (allowedOrigins.includes(origin)) {
         return callback(null, true);
