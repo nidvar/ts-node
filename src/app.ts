@@ -10,11 +10,28 @@ import {mongooseConnection} from './db/db';
 dotenv.config();
 
 export const createApp = async ()=>{
-    mongooseConnection();
+    await mongooseConnection();
 
     const app = express();
     app.use(express.json());
-    app.use(cors());
+
+    const allowedOrigins = [
+        'https://cybermern.vercel.app/',
+        'http://localhost:5173',
+    ];
+
+    app.use(cors({
+    origin: (origin, callback) => {
+        // Allow requests with no origin (e.g. curl, mobile apps)
+        if (!origin) return callback(null, true);
+        if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+        } else {
+        return callback(new Error('Not allowed by CORS'));
+        }
+    },
+    credentials: true
+    }));
     app.use(cookieParser());
 
     app.use('/', mainRouter);
