@@ -2,11 +2,13 @@ import express from 'express';
 import cors from 'cors';
 import * as dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
-import { connectDB } from '../src/config/db.js';
-import { routes } from '../src/routes/main.js';
+
+import { mongooseConnection } from '../src/db/db.js';
+import { mainRouter } from '../src/routes/routes';
+import { notesRoutes } from '../src/routes/notesRoutes';
 
 dotenv.config();
-connectDB();
+mongooseConnection();
 
 const app = express();
 
@@ -29,6 +31,7 @@ app.use(cookieParser());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
-routes(app);
+app.use('/', mainRouter);
+app.use('/notes', notesRoutes);
 
 export default app;
