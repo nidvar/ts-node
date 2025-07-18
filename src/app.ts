@@ -42,5 +42,9 @@ export const createApp = async ()=>{
     app.use('/', mainRouter);
     app.use('/notes', notesRoutes);
 
+    app.use((req, res) => {
+      res.status(404).send(`No route for ${req.method} ${req.url}`);
+    });
+
     return app;
 };
