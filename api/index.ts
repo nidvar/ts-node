@@ -35,6 +35,10 @@ app.get('/', (req, res) => {
   res.send('Backend is alive!');
 });
 
+app.use((req, res) => {
+  res.status(404).send(`No route for ${req.method} ${req.url}`);
+});
+
 app.use('/', mainRouter);
 app.use('/notes', notesRoutes);
 
