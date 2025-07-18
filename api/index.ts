@@ -31,15 +31,11 @@ app.use(cookieParser());
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
-app.get('/', (req, res) => {
-  res.send('Backend is alive!');
-});
+app.use('/', mainRouter);
+app.use('/notes', notesRoutes);
 
 app.use((req, res) => {
   res.status(404).send(`No route for ${req.method} ${req.url}`);
 });
-
-app.use('/', mainRouter);
-app.use('/notes', notesRoutes);
 
 export default app;
