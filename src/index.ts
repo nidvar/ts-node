@@ -21,6 +21,8 @@ app.use(cookieParser());
 app.use('/', mainRouter);
 app.use('/notes', notesRoutes);
 
-app.listen(8080, ()=>{
-    console.log('running on port. I just changed nodemon', 8080);
+const PORT = process.env.PORT || 3000;
+
+app.listen(PORT, ()=>{
+    console.log('Process .env gives us PORT: ', PORT);
 });

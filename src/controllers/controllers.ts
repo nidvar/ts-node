@@ -78,15 +78,13 @@ export const getAllPosts = async (req: Request, res: Response) => {
 };
 
 export const singlePost = async (req: Request, res: Response)=>{
-
     try{
         const singlePost = await Post.findById({_id: req.params.id});
         console.log(singlePost);
         res.json(singlePost);
     }catch(error){
-
+        console.log(error)
     }
-
     res.json({message: 'finished'})
 }
 

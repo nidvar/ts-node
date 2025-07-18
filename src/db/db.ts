@@ -7,4 +7,4 @@ export const mongooseConnection = async ()=>{
     }catch(error){
         console.log(error);
     }
-}
+};
