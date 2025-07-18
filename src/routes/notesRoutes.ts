@@ -3,6 +3,8 @@ import { getAllNotes, createNewNote, deleteSingleNote, updateOneNote, getSingleN
 
 const router = express.Router();
 
+console.log("notesRoutes loaded");
+
 router.get("/", getAllNotes);
 router.get("/:id", getSingleNote);
 router.post("/create" , createNewNote);
