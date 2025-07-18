@@ -14,10 +14,6 @@ mongooseConnection();
 
 const app = express();
 
-app.get('/', (req, res) => {
-  res.send('Backend is alive!');
-});
-
 app.use(express.json());
 app.use(cors());
 app.use(cookieParser());
