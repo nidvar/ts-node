@@ -3,7 +3,7 @@ import cors from 'cors';
 import * as dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 
-import { mongooseConnection } from '../src/db/db.js';
+import { mongooseConnection } from '../src/db/db';
 import { mainRouter } from '../src/routes/routes';
 import { notesRoutes } from '../src/routes/notesRoutes';
 
