@@ -13,10 +13,6 @@ export const createApp = async ()=>{
     await mongooseConnection();
 
     const app = express();
-
-    app.get('/', (req, res) => {
-      res.send('Backend is alive!');
-    });
     
     app.use(express.json());
 
@@ -26,16 +22,16 @@ export const createApp = async ()=>{
     ];
 
     app.use(cors({
-    origin: (origin, callback) => {
-        console.log('Request origin:', origin);
-        if (!origin) return callback(null, true);
-        if (allowedOrigins.includes(origin)) {
-        return callback(null, true);
-        } else {
-        return callback(new Error('Not allowed by CORS'));
-        }
-    },
-    credentials: true
+        origin: (origin, callback) => {
+            console.log('Request origin:', origin);
+            if (!origin) return callback(null, true);
+            if (allowedOrigins.includes(origin)) {
+            return callback(null, true);
+            } else {
+            return callback(new Error('Not allowed by CORS'));
+            }
+        },
+        credentials: true
     }));
     app.use(cookieParser());
 
