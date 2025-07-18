@@ -2,6 +2,7 @@ import { Response, Request } from 'express';
 import {Notes} from '../models/NotesModel';
 
 export const getAllNotes = async function(req: Request, res: Response){
+    console.log("getAllNotes called");
     try{
         const notes = await Notes.find({});
         res.json(notes);
