@@ -39,8 +39,8 @@ export const createApp = async ()=>{
     }));
     app.use(cookieParser());
 
-    app.use('/', mainRouter);
-    app.use('/notes', notesRoutes);
+    app.use('/api', mainRouter);
+    app.use('/api/notes', notesRoutes);
 
     app.use((req, res) => {
       res.status(404).send(`No route for ${req.method} ${req.url}`);
